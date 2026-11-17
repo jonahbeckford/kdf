@@ -4,4 +4,14 @@
  (modules scrypt)
  (libraries mirage-crypto kdf.pbkdf)
  (c_names salsa-core)
- (c_flags (:standard --std=c99 -Wall -Wextra -O3)))
+ (c_flags (:standard (:include c_flags.sexp))))
+
+(rule
+ (targets c_flags.sexp)
+ (enabled_if (<> %{ocaml-config:ccomp_type} msvc))
+ (action (with-stdout-to %{targets} (echo "(--std=c99 -Wall -Wextra -O3)"))))
+
+(rule
+ (targets c_flags.sexp)
+ (enabled_if (= %{ocaml-config:ccomp_type} msvc))
+ (action (with-stdout-to %{targets} (echo "(/O2)"))))
