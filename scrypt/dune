@@ -14,4 +14,4 @@
 (rule
  (targets c_flags.sexp)
  (enabled_if (= %{ocaml-config:ccomp_type} msvc))
- (action (with-stdout-to %{targets} (echo "(/O2)"))))
+ (action (with-stdout-to %{targets} (echo "(-O2)"))))
